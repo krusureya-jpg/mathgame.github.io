@@ -1,0 +1,42 @@
+{
+  "background_color": "#ffffff",
+  "description": "              ยินดีต้อนรับสู่เว็บไซต์เพื่อการศึกษา สำหรับนักเรียนและครูผู้ที่สนใจ สำหรับการจัดทำเว็บไซต์นี้ มีวัตถุประสงค์ที่สำคัญคือ เป็นสื่อการเรียนรู้ สำหรับวิชาคณิตศาสตร์ระดับมัธยมศึกษา\n",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "เกมจำนวนเต็ม (ม.1)",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "เกมจำนวนเต็ม (ม.1)",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "https://ssl.gstatic.com/atari/images/public/favicon.ico",
+      "type": "image/x-icon",
+      "isSquare": false,
+      "isPng": false,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 0,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/sitesv/APaQ0SQ5vDrKSzBk5ABF5MlJWIGv4AbYoLypZ9mU1AmOAV9NDlX1pkYYIFDvVQkVGrcQmHvyBi7nZkcrhGZusF-u-Oub8QEmssHLFj9SFT_LV_U9wcVlTFUh1Mu7hXZXteCTnDExPRSEyl-LLiwZyTvaYGzeWm7DktmiR669d0uFwg62AuT9c3bAH9Bm78I=w1280",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "isSquare": true,
+      "isPng": true,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 1024,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ],
+  "share_target": {
+    "method": "GET"
+  }
+}
