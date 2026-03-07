@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>เรียนรู้จำนวนเต็ม ม.1</title>
+
+<style>
+body{
+    font-family: "Tahoma";
+    background:#f0f4ff;
+    text-align:center;
+}
+
+h1{
+    color:#1b3a8a;
+}
+
+.box{
+    background:white;
+    width:600px;
+    margin:auto;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+button{
+    padding:10px 20px;
+    font-size:16px;
+    margin:10px;
+    cursor:pointer;
+}
+
+input{
+    padding:10px;
+    font-size:16px;
+    width:100px;
+    text-align:center;
+}
+
+#question{
+    font-size:28px;
+    margin:20px;
+}
+
+.score{
+    font-size:20px;
+    color:green;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📘 บทเรียนคณิตศาสตร์: จำนวนเต็ม (ม.1)</h1>
+
+<div class="box">
+
+<h3>ความหมายของจำนวนเต็ม</h3>
+
+<p>
+จำนวนเต็ม คือ จำนวนที่ไม่มีเศษส่วน<br><br>
+
+ตัวอย่าง<br>
+-5 , -4 , -3 , -2 , -1 , 0 , 1 , 2 , 3 , 4 , 5
+</p>
+
+<p>
+จำนวนเต็มบวก : 1,2,3,...<br>
+จำนวนเต็มลบ : -1,-2,-3,...<br>
+ศูนย์ : 0
+</p>
+
+<hr>
+
+<h2>🎮 เกมฝึกคิดจำนวนเต็ม</h2>
+
+<div id="question">กดเริ่มเกม</div>
+
+<input id="answer" type="number">
+
+<br>
+
+<button onclick="startGame()">เริ่ม</button>
+<button onclick="checkAnswer()">ตอบ</button>
+
+<p id="result"></p>
+
+<p class="score">
+คะแนน : <span id="score">0</span>
+</p>
+
+</div>
+
+<script>
+
+let num1
+let num2
+let op
+let correct
+let score = 0
+
+function startGame(){
+
+num1 = Math.floor(Math.random()*20)-10
+num2 = Math.floor(Math.random()*20)-10
+
+let ops = ["+","-","×"]
+
+op = ops[Math.floor(Math.random()*ops.length)]
+
+if(op=="+") correct = num1 + num2
+if(op=="-") correct = num1 - num2
+if(op=="×") correct = num1 * num2
+
+document.getElementById("question").innerHTML =
+num1 + " " + op + " " + num2 + " = ?"
+
+document.getElementById("answer").value=""
+document.getElementById("result").innerHTML=""
+
+}
+
+function checkAnswer(){
+
+let ans = Number(document.getElementById("answer").value)
+
+if(ans==correct){
+
+score++
+
+document.getElementById("result").innerHTML="✅ ถูกต้อง"
+document.getElementById("score").innerHTML=score
+
+startGame()
+
+}else{
+
+document.getElementById("result").innerHTML=
+"❌ ผิด คำตอบคือ "+correct
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
