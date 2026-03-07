@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Math Game จำนวนเต็ม</title>
+<title>Math Game จำนวนเต็ม ม.1</title>
 
 <link rel="manifest" href="manifest.json">
-
 <meta name="theme-color" content="#1b3a8a">
 
 <style>
@@ -17,24 +17,32 @@ body{
 font-family:tahoma;
 background:#eef3ff;
 text-align:center;
+padding:20px;
 }
 
 h1{
 color:#1b3a8a;
 }
 
-.box{
+.gamebox{
 background:white;
 max-width:500px;
 margin:auto;
 padding:25px;
 border-radius:15px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
+box-shadow:0 0 15px rgba(0,0,0,0.2);
 }
 
 #question{
-font-size:30px;
+font-size:32px;
 margin:20px;
+}
+
+input{
+font-size:22px;
+padding:10px;
+width:120px;
+text-align:center;
 }
 
 button{
@@ -45,18 +53,26 @@ border:none;
 background:#1b3a8a;
 color:white;
 border-radius:8px;
+cursor:pointer;
 }
 
-input{
-font-size:22px;
-padding:10px;
-width:120px;
-text-align:center;
+button:hover{
+background:#2f55c7;
 }
 
 #installBtn{
 display:none;
 background:#28a745;
+}
+
+#result{
+font-size:20px;
+margin-top:10px;
+}
+
+.scoreboard{
+margin-top:20px;
+font-size:18px;
 }
 
 </style>
@@ -65,9 +81,9 @@ background:#28a745;
 
 <body>
 
-<h1>📚 Math Game จำนวนเต็ม</h1>
+<h1>📚 เกมคณิตศาสตร์ จำนวนเต็ม ม.1</h1>
 
-<div class="box">
+<div class="gamebox">
 
 <div id="question"></div>
 
@@ -77,14 +93,14 @@ background:#28a745;
 
 <button onclick="checkAnswer()">ตอบ</button>
 
-<button id="installBtn">ติดตั้งแอป</button>
+<button id="installBtn">📱 ติดตั้งแอป</button>
 
-<p id="result"></p>
+<div id="result"></div>
 
-<p>
-คะแนน <span id="score">0</span> |
-ชีวิต <span id="life">3</span>
-</p>
+<div class="scoreboard">
+คะแนน: <span id="score">0</span><br>
+ชีวิต: <span id="life">3</span>
+</div>
 
 </div>
 
@@ -101,7 +117,7 @@ function rand(){
 return Math.floor(Math.random()*20)-10
 }
 
-function newQ(){
+function newQuestion(){
 
 num1=rand()
 num2=rand()
@@ -110,12 +126,14 @@ let ops=["+","-","×"]
 
 op=ops[Math.floor(Math.random()*3)]
 
-if(op=="+")correct=num1+num2
-if(op=="-")correct=num1-num2
-if(op=="×")correct=num1*num2
+if(op=="+") correct=num1+num2
+if(op=="-") correct=num1-num2
+if(op=="×") correct=num1*num2
 
 document.getElementById("question").innerHTML=
 num1+" "+op+" "+num2+" = ?"
+
+document.getElementById("answer").value=""
 
 }
 
@@ -126,12 +144,14 @@ let ans=Number(document.getElementById("answer").value)
 if(ans===correct){
 
 score++
+
 document.getElementById("result").innerHTML="✅ ถูกต้อง"
 
 }else{
 
 life--
-document.getElementById("result").innerHTML="❌ ผิด"
+
+document.getElementById("result").innerHTML="❌ ผิด คำตอบคือ "+correct
 
 }
 
@@ -145,13 +165,16 @@ alert("จบเกม คะแนน "+score)
 score=0
 life=3
 
+document.getElementById("score").innerHTML=score
+document.getElementById("life").innerHTML=life
+
 }
 
-newQ()
+newQuestion()
 
 }
 
-newQ()
+newQuestion()
 
 </script>
 
@@ -171,7 +194,7 @@ let deferredPrompt
 
 const installBtn=document.getElementById("installBtn")
 
-window.addEventListener('beforeinstallprompt',(e)=>{
+window.addEventListener("beforeinstallprompt",(e)=>{
 
 e.preventDefault()
 
@@ -181,7 +204,9 @@ installBtn.style.display="inline-block"
 
 })
 
-installBtn.addEventListener('click',async()=>{
+installBtn.addEventListener("click",async()=>{
+
+if(deferredPrompt){
 
 deferredPrompt.prompt()
 
@@ -190,6 +215,8 @@ const {outcome}=await deferredPrompt.userChoice
 if(outcome==="accepted"){
 
 installBtn.style.display="none"
+
+}
 
 }
 
