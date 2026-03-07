@@ -1,3 +1,12 @@
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js')
+  .then(function() {
+    console.log("Service Worker Registered");
+  });
+}
+</script>
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
