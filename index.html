@@ -1,46 +1,40 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Math Game จำนวนเต็ม ม.1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Math Game จำนวนเต็ม</title>
 
 <link rel="manifest" href="manifest.json">
+
 <meta name="theme-color" content="#1b3a8a">
 
 <style>
 
 body{
-font-family:Tahoma;
+font-family:tahoma;
 background:#eef3ff;
 text-align:center;
-padding:20px;
 }
 
 h1{
 color:#1b3a8a;
 }
 
-.gamebox{
+.box{
 background:white;
 max-width:500px;
 margin:auto;
 padding:25px;
 border-radius:15px;
-box-shadow:0 0 15px rgba(0,0,0,0.2);
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
 #question{
-font-size:32px;
+font-size:30px;
 margin:20px;
-}
-
-input{
-font-size:22px;
-padding:10px;
-width:120px;
-text-align:center;
 }
 
 button{
@@ -51,21 +45,18 @@ border:none;
 background:#1b3a8a;
 color:white;
 border-radius:8px;
-cursor:pointer;
 }
 
-button:hover{
-background:#2f55c7;
+input{
+font-size:22px;
+padding:10px;
+width:120px;
+text-align:center;
 }
 
-#result{
-font-size:20px;
-margin-top:10px;
-}
-
-.scoreboard{
-margin-top:20px;
-font-size:18px;
+#installBtn{
+display:none;
+background:#28a745;
 }
 
 </style>
@@ -74,25 +65,26 @@ font-size:18px;
 
 <body>
 
-<h1>📚 เกมคณิตศาสตร์ จำนวนเต็ม ม.1</h1>
+<h1>📚 Math Game จำนวนเต็ม</h1>
 
-<div class="gamebox">
+<div class="box">
 
-<div id="question">กดเริ่มเกม</div>
+<div id="question"></div>
 
 <input id="answer" type="number">
 
 <br>
 
-<button onclick="startGame()">เริ่มเกม</button>
 <button onclick="checkAnswer()">ตอบ</button>
 
-<div id="result"></div>
+<button id="installBtn">ติดตั้งแอป</button>
 
-<div class="scoreboard">
-คะแนน: <span id="score">0</span><br>
-ชีวิต: <span id="life">3</span>
-</div>
+<p id="result"></p>
+
+<p>
+คะแนน <span id="score">0</span> |
+ชีวิต <span id="life">3</span>
+</p>
 
 </div>
 
@@ -102,31 +94,28 @@ let num1
 let num2
 let op
 let correct
-let score = 0
-let life = 3
+let score=0
+let life=3
 
-function randomInt(){
+function rand(){
 return Math.floor(Math.random()*20)-10
 }
 
-function startGame(){
+function newQ(){
 
-num1=randomInt()
-num2=randomInt()
+num1=rand()
+num2=rand()
 
 let ops=["+","-","×"]
 
 op=ops[Math.floor(Math.random()*3)]
 
-if(op=="+") correct=num1+num2
-if(op=="-") correct=num1-num2
-if(op=="×") correct=num1*num2
+if(op=="+")correct=num1+num2
+if(op=="-")correct=num1-num2
+if(op=="×")correct=num1*num2
 
 document.getElementById("question").innerHTML=
 num1+" "+op+" "+num2+" = ?"
-
-document.getElementById("answer").value=""
-document.getElementById("result").innerHTML=""
 
 }
 
@@ -137,15 +126,12 @@ let ans=Number(document.getElementById("answer").value)
 if(ans===correct){
 
 score++
-
 document.getElementById("result").innerHTML="✅ ถูกต้อง"
 
 }else{
 
 life--
-
-document.getElementById("result").innerHTML=
-"❌ ผิด คำตอบคือ "+correct
+document.getElementById("result").innerHTML="❌ ผิด"
 
 }
 
@@ -159,24 +145,55 @@ alert("จบเกม คะแนน "+score)
 score=0
 life=3
 
-document.getElementById("score").innerHTML=score
-document.getElementById("life").innerHTML=life
+}
+
+newQ()
 
 }
 
-startGame()
-
-}
-
-startGame()
+newQ()
 
 </script>
 
 <script>
 
-if ('serviceWorker' in navigator) {
+if('serviceWorker' in navigator){
+
 navigator.serviceWorker.register('service-worker.js')
+
 }
+
+</script>
+
+<script>
+
+let deferredPrompt
+
+const installBtn=document.getElementById("installBtn")
+
+window.addEventListener('beforeinstallprompt',(e)=>{
+
+e.preventDefault()
+
+deferredPrompt=e
+
+installBtn.style.display="inline-block"
+
+})
+
+installBtn.addEventListener('click',async()=>{
+
+deferredPrompt.prompt()
+
+const {outcome}=await deferredPrompt.userChoice
+
+if(outcome==="accepted"){
+
+installBtn.style.display="none"
+
+}
+
+})
 
 </script>
 
