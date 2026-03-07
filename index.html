@@ -1,88 +1,82 @@
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js')
-  .then(function() {
-    console.log("Service Worker Registered");
-  });
-}
-</script>
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>เรียนรู้จำนวนเต็ม ม.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Math Game จำนวนเต็ม ม.1</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1b3a8a">
 
 <style>
+
 body{
-    font-family: "Tahoma";
-    background:#f0f4ff;
-    text-align:center;
+font-family:Tahoma;
+background:#eef3ff;
+text-align:center;
+padding:20px;
 }
 
 h1{
-    color:#1b3a8a;
+color:#1b3a8a;
 }
 
-.box{
-    background:white;
-    width:600px;
-    margin:auto;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-
-button{
-    padding:10px 20px;
-    font-size:16px;
-    margin:10px;
-    cursor:pointer;
-}
-
-input{
-    padding:10px;
-    font-size:16px;
-    width:100px;
-    text-align:center;
+.gamebox{
+background:white;
+max-width:500px;
+margin:auto;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,0.2);
 }
 
 #question{
-    font-size:28px;
-    margin:20px;
+font-size:32px;
+margin:20px;
 }
 
-.score{
-    font-size:20px;
-    color:green;
+input{
+font-size:22px;
+padding:10px;
+width:120px;
+text-align:center;
 }
+
+button{
+padding:10px 20px;
+font-size:18px;
+margin:10px;
+border:none;
+background:#1b3a8a;
+color:white;
+border-radius:8px;
+cursor:pointer;
+}
+
+button:hover{
+background:#2f55c7;
+}
+
+#result{
+font-size:20px;
+margin-top:10px;
+}
+
+.scoreboard{
+margin-top:20px;
+font-size:18px;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<h1>📘 บทเรียนคณิตศาสตร์: จำนวนเต็ม (ม.1)</h1>
+<h1>📚 เกมคณิตศาสตร์ จำนวนเต็ม ม.1</h1>
 
-<div class="box">
-
-<h3>ความหมายของจำนวนเต็ม</h3>
-
-<p>
-จำนวนเต็ม คือ จำนวนที่ไม่มีเศษส่วน<br><br>
-
-ตัวอย่าง<br>
--5 , -4 , -3 , -2 , -1 , 0 , 1 , 2 , 3 , 4 , 5
-</p>
-
-<p>
-จำนวนเต็มบวก : 1,2,3,...<br>
-จำนวนเต็มลบ : -1,-2,-3,...<br>
-ศูนย์ : 0
-</p>
-
-<hr>
-
-<h2>🎮 เกมฝึกคิดจำนวนเต็ม</h2>
+<div class="gamebox">
 
 <div id="question">กดเริ่มเกม</div>
 
@@ -90,14 +84,15 @@ input{
 
 <br>
 
-<button onclick="startGame()">เริ่ม</button>
+<button onclick="startGame()">เริ่มเกม</button>
 <button onclick="checkAnswer()">ตอบ</button>
 
-<p id="result"></p>
+<div id="result"></div>
 
-<p class="score">
-คะแนน : <span id="score">0</span>
-</p>
+<div class="scoreboard">
+คะแนน: <span id="score">0</span><br>
+ชีวิต: <span id="life">3</span>
+</div>
 
 </div>
 
@@ -108,22 +103,27 @@ let num2
 let op
 let correct
 let score = 0
+let life = 3
+
+function randomInt(){
+return Math.floor(Math.random()*20)-10
+}
 
 function startGame(){
 
-num1 = Math.floor(Math.random()*20)-10
-num2 = Math.floor(Math.random()*20)-10
+num1=randomInt()
+num2=randomInt()
 
-let ops = ["+","-","×"]
+let ops=["+","-","×"]
 
-op = ops[Math.floor(Math.random()*ops.length)]
+op=ops[Math.floor(Math.random()*3)]
 
-if(op=="+") correct = num1 + num2
-if(op=="-") correct = num1 - num2
-if(op=="×") correct = num1 * num2
+if(op=="+") correct=num1+num2
+if(op=="-") correct=num1-num2
+if(op=="×") correct=num1*num2
 
-document.getElementById("question").innerHTML =
-num1 + " " + op + " " + num2 + " = ?"
+document.getElementById("question").innerHTML=
+num1+" "+op+" "+num2+" = ?"
 
 document.getElementById("answer").value=""
 document.getElementById("result").innerHTML=""
@@ -132,24 +132,50 @@ document.getElementById("result").innerHTML=""
 
 function checkAnswer(){
 
-let ans = Number(document.getElementById("answer").value)
+let ans=Number(document.getElementById("answer").value)
 
-if(ans==correct){
+if(ans===correct){
 
 score++
 
 document.getElementById("result").innerHTML="✅ ถูกต้อง"
-document.getElementById("score").innerHTML=score
-
-startGame()
 
 }else{
+
+life--
 
 document.getElementById("result").innerHTML=
 "❌ ผิด คำตอบคือ "+correct
 
 }
 
+document.getElementById("score").innerHTML=score
+document.getElementById("life").innerHTML=life
+
+if(life<=0){
+
+alert("จบเกม คะแนน "+score)
+
+score=0
+life=3
+
+document.getElementById("score").innerHTML=score
+document.getElementById("life").innerHTML=life
+
+}
+
+startGame()
+
+}
+
+startGame()
+
+</script>
+
+<script>
+
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('service-worker.js')
 }
 
 </script>
