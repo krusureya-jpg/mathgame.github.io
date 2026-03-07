@@ -1,21 +1,9 @@
-const CACHE="mathgame-v1"
+const CACHE_NAME="mathgame-v1"
 
-self.addEventListener("install",e=>{
-e.waitUntil(
-caches.open(CACHE).then(cache=>{
-return cache.addAll([
-"./",
-"./index.html",
-"./manifest.json"
-])
-})
-)
+self.addEventListener("install",event=>{
+self.skipWaiting()
 })
 
-self.addEventListener("fetch",e=>{
-e.respondWith(
-caches.match(e.request).then(r=>{
-return r||fetch(e.request)
-})
-)
+self.addEventListener("activate",event=>{
+event.waitUntil(clients.claim())
 })
