@@ -1,9 +1,3 @@
-const CACHE_NAME="mathgame-v1"
-
-self.addEventListener("install",event=>{
-self.skipWaiting()
-})
-
-self.addEventListener("activate",event=>{
-event.waitUntil(clients.claim())
-})
+self.addEventListener('install', e => {
+self.skipWaiting();
+});
